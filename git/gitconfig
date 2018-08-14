@@ -1,0 +1,21 @@
+[alias]
+	
+	# View abbreviated SHA, description, and history graph of the latest 20 commits
+    l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+    # View the current working tree status using the short format
+	s = status -s
+
+	# git up: rebases instead of merging see gh://aanand/git-up/	
+	up = pull --rebase --autostash
+
+
+[core]
+	
+	# Custom gitignore and gitattributes.
+	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.gitattributes_global
+
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+
