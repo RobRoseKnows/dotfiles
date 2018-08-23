@@ -68,7 +68,6 @@ ZSH_THEME="random"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  git-extras
   python
   pyenv
   ssh-agent
