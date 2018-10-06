@@ -9,13 +9,14 @@
 
 - link:
     ~/.dotfiles: ''
+    ~/.oh-my-zsh: ~
     ~/.vim: 'vim'
-    ~/.vimrc: 'rc/zshrc'
-    ~/.gitconfig: ~
-    ~/.gitignore_global: ~
-    ~/.zsh: ~
+    ~/.vimrc: 'rc/vimrc'
+    ~/.gitconfig: 'git/gitconfig'
+    ~/.gitignore_global: 'git/gitignore_global'
+    #~/.zsh: ~
     ~/.zshrc: 'rc/zshrc'
-    ~/.zsh_aliases: ~
+    #~/.zsh_aliases: ~
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
