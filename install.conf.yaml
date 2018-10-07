@@ -10,13 +10,16 @@
 - link:
     ~/.dotfiles: ''
     ~/.oh-my-zsh: ~
+    ~/.pyenv: ~
     ~/.vim: 'vim'
     ~/.vimrc: 'rc/vimrc'
     ~/.gitconfig: 'git/gitconfig'
     ~/.gitignore_global: 'git/gitignore_global'
     #~/.zsh: ~
-    ~/.zshrc: 'rc/zshrc'
+    ~/.zshenv: 'zsh/zshenv'
+    ~/.zshrc: 'zsh/zshrc'
     #~/.zsh_aliases: ~
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [vim +PluginInstall +qall, Installing Vim plugins]
