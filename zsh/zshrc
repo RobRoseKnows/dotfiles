@@ -70,6 +70,7 @@ plugins=(
   git
   python
   pyenv
+  gpg-agent
   ssh-agent
   sudo
   wd
