@@ -18,6 +18,7 @@
     #~/.zsh: ~
     ~/.zshenv: 'zsh/zshenv'
     ~/.zshrc: 'zsh/zshrc'
+    ~/.zsh_local_before: 'zsh/zsh_local_before'
     #~/.zsh_aliases: ~
 
 - shell:
