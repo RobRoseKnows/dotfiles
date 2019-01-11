@@ -19,6 +19,7 @@
     ~/.zshenv: 'zsh/zshenv'
     ~/.zshrc: 'zsh/zshrc'
     ~/.zsh_local_before: 'zsh/zsh_local_before'
+    ~/.zsh_local_after: 'zsh/zsh_local_after'
     #~/.oh-my-zsh/custom/plugins: 'zsh/omz-custom-plugins'
     #~/.zsh_aliases: ~
 

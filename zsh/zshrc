@@ -76,6 +76,7 @@ plugins+=(
   ssh-agent
   sudo
   wd
+  zsh-nvm
 )
 
 
@@ -117,5 +118,3 @@ if [ -f ~/.zshrc_local_after ]; then
 fi
 
 
-# added by pipsi (https://github.com/mitsuhiko/pipsi)
-export PATH="/home/rob/.local/bin:$PATH"
