@@ -1,9 +1,9 @@
 # added by pipsi (https://github.com/mitsuhiko/pipsi)
 export PATH="/home/rob/.local/bin:$PATH"
 
-eval "$(direnv hook zsh)"
+#eval "$(direnv hook zsh)"
 
-export LOADED_LOCAL_AFTER="YES"
+#export LOADED_LOCAL_AFTER="YES"
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
