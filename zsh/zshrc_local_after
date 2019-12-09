@@ -5,10 +5,5 @@ export PATH="/home/rob/.local/bin:$PATH"
 
 #export LOADED_LOCAL_AFTER="YES"
 
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /home/rob/.nvm/versions/node/v10.14.2/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /home/rob/.nvm/versions/node/v10.14.2/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /home/rob/.nvm/versions/node/v10.14.2/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /home/rob/.nvm/versions/node/v10.14.2/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
-
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

@@ -10,7 +10,7 @@
 - link:
     ~/.dotfiles: ''
     ~/.oh-my-zsh: ~
-    ~/.pyenv: ~
+    ~/.asdf: ~
     ~/.vim: 'vim'
     ~/.vimrc: 'rc/vimrc'
     ~/.gitconfig: 'git/gitconfig'

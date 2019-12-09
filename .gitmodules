@@ -16,3 +16,6 @@
 [submodule "zsh/omz-custom-plugins/zsh-nvm"]
 	path = zsh/omz-custom-plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm
+[submodule "asdf"]
+	path = asdf
+	url = git@github.com:asdf-vm/asdf.git
