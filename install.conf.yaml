@@ -10,7 +10,7 @@
 - link:
     ~/.dotfiles: ''
     ~/.oh-my-zsh: ~
-    ~/.pyenv: ~
+    ~/.asdf: ~
     ~/.vim: 'vim'
     ~/.vimrc: 'rc/vimrc'
     ~/.gitconfig: 'git/gitconfig'
@@ -18,6 +18,9 @@
     #~/.zsh: ~
     ~/.zshenv: 'zsh/zshenv'
     ~/.zshrc: 'zsh/zshrc'
+    ~/.zshrc_local_before: 'zsh/zshrc_local_before'
+    ~/.zshrc_local_after: 'zsh/zshrc_local_after'
+    #~/.oh-my-zsh/custom/plugins: 'zsh/omz-custom-plugins'
     #~/.zsh_aliases: ~
 
 - shell:

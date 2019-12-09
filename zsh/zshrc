@@ -66,17 +66,18 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
+plugins+=(
+  asdf
   docker
   docker-compose
   git
   python
-  pyenv
   gpg-agent
   ssh-agent
   sudo
   wd
 )
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -116,5 +117,4 @@ if [ -f ~/.zshrc_local_after ]; then
 fi
 
 
-# added by pipsi (https://github.com/mitsuhiko/pipsi)
-export PATH="/home/rob/.local/bin:$PATH"
+
