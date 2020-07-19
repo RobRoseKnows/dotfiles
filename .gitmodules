@@ -7,15 +7,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "dotbot-pip"]
-	path = dotbot-pip
-    url = https://github.com/sobolevn/dotbot-pip.git
-[submodule "pyenv"]
-	path = pyenv
-	url = https://github.com/pyenv/pyenv
-[submodule "zsh/omz-custom-plugins/zsh-nvm"]
-	path = zsh/omz-custom-plugins/zsh-nvm
-	url = https://github.com/lukechilds/zsh-nvm
 [submodule "asdf"]
 	path = asdf
 	url = git@github.com:asdf-vm/asdf.git
