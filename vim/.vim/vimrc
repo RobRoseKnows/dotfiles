@@ -1,59 +1,328 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" General {{{
+  " a handful of basic config options come from vim-sensible
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+  set nocompatible " get out of vi-compatibility mode
+  set history=9999 " keep plenty of history
+  set undodir^=~/.vim/undo
+  set undofile
+  set spellfile=~/.vim/en.utf-8.add
+  set hidden " allow changing buffers without saving
+  set wildmode=list:longest,full
+  set modelines=5
+  set encoding=utf-8
+  filetype plugin indent on
+  "set mouse=a " enable mouse support
+" }}}
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Vim UI {{{
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+  set number " show line numbers
+  set splitright "open vertical splits on the right
+  set noshowmode
 
-" download solarized colorscheme
-Plugin 'altercation/vim-colors-solarized'
+  " Scrolling
+  set scrolloff=3
+  set sidescroll=1
+  set sidescrolloff=10
+" }}}
 
-" Better language highlighting
-Plugin 'tpope/vim-markdown'
-Plugin 'elzr/vim-json'
+" Text Formatting / Layout {{{
+  set ignorecase smartcase infercase " smart case matching
+  set tabstop=2 shiftwidth=2 expandtab  " 2 space indents
+  if v:version >= 704
+    set formatoptions+=cqj
+  endif
 
+  set diffopt=filler,vertical
 
-Plugin 'wakatime/vim-wakatime'
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just
-" :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to
-" auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+  " When editing a file, always jump to the last known cursor position. Don't
+  " do it when the position is invalid or when inside an event handler (happens
+  " when dropping a file on gvim). Also don't do it when the mark is in the
+  " first line, that is the default position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+" }}}
 
-set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+" Folding {{{
+  set foldenable " turn on folding
+  set foldmethod=marker "fold on markers
+  set foldlevel=100 " don't autofold anything
+  set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
 
-syntax enable
-set showmatch " show matching brackets
+  nnoremap cof :call FoldColumnToggle()<cr>
+  function! FoldColumnToggle()
+      if &foldcolumn
+          setlocal foldcolumn=0
+      else
+          setlocal foldcolumn=1
+      endif
+  endfunction
+" }}}
 
-" Markdown config
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript', 'json', 'yaml', 'go']
+" Mappings {{{
+  let mapleader = "\<SPACE>"
+  let maplocalleader = ","
 
-" Simple setting of colorscheme, should do more later on.
-set background=dark
-colorscheme solarized
+  " Don't use Ex mode, use Q for formatting
+  noremap Q gq
 
-"---------------------
-" Local customizations
-"---------------------
+  " Use sane regexes.
+  nnoremap / /\v
+  vnoremap / /\v
 
-let $LOCALFILE=expand("~/.vimrc_local")
-if filereadable($LOCALFILE)
-    source $LOCALFILE
-endif
+  noremap j gj
+  noremap k gk
+
+  vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>
+
+  " Join lines and restore cursor location (J)
+  nnoremap J :call Preserve("join")<CR>
+
+  " Buffer navigation
+  nnoremap <leader>; <C-^>
+  :map <leader>] :bnext<CR>
+  :map <leader>[ :bprev<CR>
+  nnoremap <leader>ls :Buffers<CR>
+  nnoremap <leader>dd :bd<CR>
+
+  " strip trailing whitespace
+  nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+
+  inoremap jk <esc>
+
+  nnoremap <silent> <leader>! :redraw!<CR>:redrawstatus!<CR>
+  nnoremap <leader>R :so $MYVIMRC<CR>
+
+  nnoremap <silent> <leader>nn :Lexplore<CR>
+  nnoremap <silent> <leader>tt :TagbarToggle<CR>
+
+  " tab navigation
+  nnoremap <silent> <leader>tn :tabnew<CR>
+  nnoremap <silent> <leader>tc :tabclose<CR>
+  nnoremap <S-L> :tabnext<CR>
+  nnoremap <S-H> :tabprevious<CR>
+
+  nnoremap <silent> <leader>sc :SyntasticCheck<CR>:Errors<CR>
+  nnoremap <silent> <leader>st :SyntasticToggleMode<CR>
+  " hide sign column
+  nnoremap <leader>su :sign unplace *<CR>
+  nnoremap <leader>dm :delmarks!<CR>:sign unplace *<CR>
+
+  nnoremap <leader>sh :SignifyToggleHighlight<CR>
+  nnoremap <leader>sr :SignifyRefresh<CR>
+  nnoremap <leader>st :SignifyToggle<CR>
+
+  nnoremap <leader>u :GundoToggle<CR>
+
+  " find current word in quickfix
+  nnoremap <leader>fw :execute "vimgrep ".expand("<cword>")." %"<CR>:copen<CR>
+  " find last search in quickfix
+  nnoremap <leader>ff :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+
+  " move around split windows with ctrl
+  noremap <C-H> <C-W>h
+  noremap <C-J> <C-W>j
+  noremap <C-K> <C-W>k
+  noremap <C-L> <C-W>l
+
+  inoremap <C-L>t <C-R>=system('timestamp -rfc3339')<CR>
+  inoremap <C-L>z <C-R>=system('timestamp -rfc3339 -utc')<CR>
+  inoremap <C-L>e <C-R>=system('timestamp -epoch')<CR>
+
+  nnoremap <C-T> :FZF<CR>
+" }}}
+
+" Functions {{{
+  " Convenient command to see the difference between the current buffer and
+  " the file it was loaded from, thus the changes you made.
+  " Only define it when not defined already.
+  if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+        \ | wincmd p | diffthis
+  endif
+
+  function! Preserve(command) "{{{
+    " preparation: save last search, and cursor position.
+    let _s=@/
+    let view = winsaveview()
+    " do the business:
+    execute a:command
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call winrestview(view)
+  endfunction "}}}
+" }}}
+
+" Plugins {{{
+  call plug#begin('~/.vim/bundle')
+
+  Plug 'blueyed/vim-colors-solarized'
+  Plug 'junegunn/gv.vim'
+  Plug 'kshenoy/vim-signature'
+  Plug 'majutsushi/tagbar'
+  Plug 'michaeljsmith/vim-indent-object'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'sheerun/vim-polyglot'
+  Plug 'sickill/vim-pasta'
+  Plug 'tpope/vim-afterimage'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-eunuch'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-git'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-sensible'
+  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'tpope/vim-vinegar'
+
+  Plug '~/.vim/bundle/osc52'
+
+  source $VIMRUNTIME/macros/matchit.vim
+
+  " pin to commit before https://github.com/fatih/vim-go/pull/2497 was merged
+  " until vim 8.0.1453 is available on debian stretch
+  Plug 'fatih/vim-go', { 'commit': '1946131' }
+
+  Plug 'vim-scripts/localvimrc'
+  let g:localvimrc_ask = 0
+
+  Plug 'sjl/gundo.vim'
+  let g:gundo_preview_bottom = 1
+  if has('python3')
+    let g:gundo_prefer_python3 = 1
+  endif
+
+  let g:netrw_banner = 0
+  let g:netrw_liststyle = 3
+  let g:netrw_browse_split = 4
+  let g:netrw_altv = 1
+  let g:netrw_winsize = -28
+
+  Plug 'mhinz/vim-signify'
+  let g:signify_vcs_list = [ 'git', 'hg' ]
+
+  Plug 'w0rp/ale'
+  let g:ale_lint_on_text_changed = 'normal'
+  let g:ale_lint_on_insert_leave = 1
+  highlight ALEErrorSign ctermfg=8 ctermbg=1
+
+  Plug 'zhaocai/GoldenView.vim'
+  let g:goldenview__enable_default_mapping = 0
+  nnoremap cog :ToggleGoldenViewAutoResize<CR>
+
+  Plug 'mileszs/ack.vim'
+  if executable("rg")
+    set grepprg=rg\ --vimgrep\ --no-heading
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+    let g:ackprg = 'rg --vimgrep --no-heading'
+  endif
+
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  Plug 'junegunn/fzf.vim'
+  let g:fzf_history_dir = '~/.fzf-history'
+  let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-s': 'split', 'ctrl-v': 'vsplit' }
+  let g:fzf_layout = { 'down': '~70%' }
+
+  " Airline {{{
+    Plug 'bling/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+    let g:airline_left_sep=''
+    let g:airline_right_sep=''
+    let g:airline_mode_map = {
+        \ '__' : '-',
+        \ 'n'  : 'N',
+        \ 'i'  : 'I',
+        \ 'R'  : 'R',
+        \ 'c'  : 'C',
+        \ 'v'  : 'V',
+        \ 'V'  : 'V:line',
+        \ '' : 'V:block',
+        \ 's'  : 'S',
+        \ 'S'  : 'S:line',
+        \ '' : 'S:block',
+        \ 't'  : 'T',
+        \ }
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.crypt = '⚿'
+    let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.spell = 'Ꞩ'
+
+    let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+    let g:airline#extensions#hunks#non_zero_only = 1
+
+    let g:airline#extensions#ale#enabled = 1
+    let g:airline#extensions#ale#error_symbol = '⚠:'
+    let g:airline#extensions#ale#warning_symbol = '⦸:'
+
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_splits = 1
+    let g:airline#extensions#tabline#tab_nr_type = 2
+    let g:airline#extensions#tabline#buffer_idx_mode = 1
+    let g:airline#extensions#tabline#left_sep = ' '
+    let g:airline#extensions#tabline#left_alt_sep = '|'
+    let g:airline#extensions#tabline#show_close_button = 0
+
+    nmap <A-1> <Plug>AirlineSelectTab1
+    nmap <A-2> <Plug>AirlineSelectTab2
+    nmap <A-3> <Plug>AirlineSelectTab3
+    nmap <A-4> <Plug>AirlineSelectTab4
+    nmap <A-5> <Plug>AirlineSelectTab5
+    nmap <A-6> <Plug>AirlineSelectTab6
+    nmap <A-7> <Plug>AirlineSelectTab7
+    nmap <A-8> <Plug>AirlineSelectTab8
+    nmap <A-9> <Plug>AirlineSelectTab9
+
+    function! AirlineInit()
+        call airline#parts#define_raw('linenr', '☰ %l')
+        let g:airline_section_z = airline#section#create(['%3p%% ', 'linenr', ':%c'])
+    endfunction
+    autocmd User AirlineAfterInit call AirlineInit()
+  " }}}
+
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+  let g:limelight_conceal_ctermfg = 10
+  nnoremap <leader>gg :Goyo<CR>
+  autocmd! User GoyoEnter Limelight
+  autocmd! User GoyoLeave Limelight!
+
+  call plug#end()
+" }}}
+
+" Colors {{{
+  set background=light
+  try
+    colorscheme solarized
+  catch /^Vim\%((\a\+)\)\=:E185/
+    " ignore
+  endtry
+
+  syntax on
+  set hlsearch
+  set colorcolumn=+1 " display column at edge of textwidth
+
+  highlight SignColumn ctermbg=15
+  highlight FoldColumn ctermbg=15
+  highlight SpellBad ctermfg=1
+" }}}
+
+" Google-specific settings {{{
+  if filereadable($HOME . "/.vim/google.vim")
+    source $HOME/.vim/google.vim
+  endif
+" }}}
+
+" Local settings {{{
+  if filereadable($HOME . "/.vim/local.vim")
+    source $HOME/.vim/local.vim
+  endif
+" }}}
