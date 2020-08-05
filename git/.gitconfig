@@ -19,9 +19,8 @@
 
 
 [user]
-	email = RobRoseKnows+Git@gmail.com
+	email = robprose@google.com
 	name = Rob Rose
-	signingkey = A4283DACE9A256AE
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
