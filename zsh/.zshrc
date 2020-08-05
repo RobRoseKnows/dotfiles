@@ -68,10 +68,7 @@ ZSH_THEME="agnoster"
 # Add wisely, as too many plugins slow down shell startup.
 plugins+=(
   asdf
-  docker
-  docker-compose
   git
-  python
   gpg-agent
   ssh-agent
   sudo
