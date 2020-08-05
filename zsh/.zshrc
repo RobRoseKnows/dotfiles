@@ -84,7 +84,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins+=(
   asdf
   git
-  ssh-agent
   sudo
   wd
   zsh-autosuggestions
