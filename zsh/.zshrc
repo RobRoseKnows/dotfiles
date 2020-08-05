@@ -3,6 +3,11 @@ if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi
 
+# Allow machine, non local-specific customizations in the ~/.zshrc_machine_before file
+if [ -f ~/.zshrc_machine_before ]; then
+    source ~/.zshrc_machine_before
+fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -112,9 +117,12 @@ DEFAULT_USER="rob"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Allow machine, non local-specific customizations in the ~/.zshrc_machine_after file
+if [ -f ~/.zshrc_machine_after ]; then
+    source ~/.zshrc_machine_after
+fi
+
+# Allow local customizations in the ~/.zshrc_local_after file
 if [ -f ~/.zshrc_local_after ]; then
     source ~/.zshrc_local_after
 fi
-
-
-

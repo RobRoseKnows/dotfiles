@@ -1,26 +1,70 @@
 [alias]
-	
+	amend = commit --amend --no-edit
+  	authors = shortlog --summary --email --numbered
+  	b = branch -v -v
+  	co = checkout
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
     l = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-    # View the current working tree status using the short format
-	s = status -s
+  	
+	ll = !git l | fzf-tmux --ansi --multi --preview 'git show --color=always {+2}'
+  	st = status --short --branch
+  	start = !git init && git commit -n --allow-empty -m \"initial empty commit\"
+  	svn-diff = !git-svn-diff
 
 	# git up: rebases instead of merging see gh://aanand/git-up/	
 	up = pull --rebase --autostash
 
+	who = log --graph --pretty=format:'%Cred%h%Creset - %C(blue)a: %an <%ae>%Creset %C(green)c: %cn <%ce>%Creset - %s'
+
+  	# GitHub pull request aliases (https://gist.github.com/gnarf/5406589)
+  	pr = !git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && :
+  	pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+
+[color]
+  	ui = auto
+
+[color "diff"]
+  	meta = normal
+
 [core]
 	
 	# Custom gitignore and gitattributes.
-	excludesfile = ~/.gitignore_global
-	attributesfile = ~/.gitattributes_global
+	excludesfile = ~/.config/git/ignore
+	attributesfile = ~/.config/git/attributes
 
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+[diff "vim"]
+  	command = vimdiff
+
+# [init]
+#   	templatedir = ~/.config/git/template
+#   	defaultBranch = main
+
+[log]
+  	decorate = short
+  	follow = true
+
+[pull]
+  	rebase = true
+
+[push]
+  	default = simple
+
+[rerere]
+  	enabled = 1
 
 
 [user]
 	email = robprose@google.com
 	name = Rob Rose
+
+# Allow pushing changes when working with a "read-only" remote from GitHub.
+[url "git@github.com:"]
+  pushInsteadOf = https://github.com/
+  pushInsteadOf = git://github.com/
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
