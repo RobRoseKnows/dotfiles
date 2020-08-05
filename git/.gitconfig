@@ -46,6 +46,9 @@
   	decorate = short
   	follow = true
 
+[pull]
+	rebase = true
+
 [push]
   	default = simple
 
