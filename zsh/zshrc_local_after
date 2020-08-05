@@ -1,9 +1,0 @@
-# added by pipsi (https://github.com/mitsuhiko/pipsi)
-export PATH="/home/rob/.local/bin:$PATH"
-
-#eval "$(direnv hook zsh)"
-
-#export LOADED_LOCAL_AFTER="YES"
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
