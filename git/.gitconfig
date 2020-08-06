@@ -57,6 +57,9 @@
 	email = RobRoseKnows+Git@gmail.com
 	name = Rob Rose
 
+[includes]
+	path = ~/.config/git/local_config
+
 # Allow pushing changes when working with a "read-only" remote from GitHub.
 [url "git@github.com:"]
   pushInsteadOf = https://github.com/
