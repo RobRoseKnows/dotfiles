@@ -38,9 +38,9 @@
 [diff "vim"]
   	command = vimdiff
 
-# [init]
-#   	templatedir = ~/.config/git/template
-#   	defaultBranch = main
+[init]
+   	templatedir = ~/.config/git/template
+   	defaultBranch = main
 
 [log]
   	decorate = short
@@ -57,11 +57,11 @@
 
 
 [user]
-	email = RobRoseKnows+Git@gmail.com
+	email = RobRoseKnows@gmail.com
 	name = Rob Rose
 
-[includes]
-	path = ~/gitconfig_local
+[include]
+	path = ~/.gitconfig_local
 
 # Allow pushing changes when working with a "read-only" remote from GitHub.
 [url "git@github.com:"]
