@@ -3,6 +3,7 @@
 
 # temporory VIM files
 .*.swp
+*.un~
 
 # nfs files
 .nfs*

@@ -30,17 +30,13 @@
 [core]
 	
 	# Custom gitignore and gitattributes.
-	excludesfile = ~/.config/git/ignore
-	attributesfile = ~/.config/git/attributes
+	excludesfile = ~/.gitignore_global
+	attributesfile = ~/.gitignore_global
 
 	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
 [diff "vim"]
   	command = vimdiff
-
-[init]
-   	templatedir = ~/.config/git/template
-   	defaultBranch = main
 
 [log]
   	decorate = short
@@ -73,3 +69,4 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
