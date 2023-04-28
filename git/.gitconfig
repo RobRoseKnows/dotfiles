@@ -18,8 +18,8 @@
 	who = log --graph --pretty=format:'%Cred%h%Creset - %C(blue)a: %an <%ae>%Creset %C(green)c: %cn <%ce>%Creset - %s'
 
   	# GitHub pull request aliases (https://gist.github.com/gnarf/5406589)
-  	pr = !git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && :
-  	pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+	pr = !git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && :
+	pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 
 [color]
   	ui = auto
@@ -57,7 +57,7 @@
 	name = Rob Rose
 
 [include]
-	path = ~/.gitconfig_local
+	path = .gitconfig_local
 
 # Allow pushing changes when working with a "read-only" remote from GitHub.
 [url "git@github.com:"]
