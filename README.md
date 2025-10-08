@@ -11,9 +11,14 @@ but using oh-my-zsh instead of just zsh.
 ## Usage
 
 1. First install gnu-stow. On ubuntu this is `sudo apt install stow`.
-2. Download the recursive submodules using `git submodule --init --recursive`.
+2. Download the recursive submodules using `git submodule update --init --recursive`.
 3. From this directory, use `stow -t $HOME [the directories to install]`.
 4. Open vim and run `:PlugInstall`.
 5. Install zsh and set it to the default shell using chsh.
 6. You will probably also have to install powerline fonts.
 
+## Definitions
+
+- I define "local" as configs that may be synced, but from a different
+    repository.
+- I define "machine" as configs that are never synced.
